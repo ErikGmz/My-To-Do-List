@@ -1,0 +1,62 @@
+<form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="container">
+    <div class="row">
+        <div class="mb-4">
+            <label for="task-title" class="form-label fw-bold"> Task Title (*) </label>
+            <input type="text" class="form-control" id="task-title" aria-describedby="task-title-help" formControlName="taskTitle" 
+            autocomplete="OFF" autocapitalize="sentences" spellcheck="false" placeholder="Task Title Template Text" [readonly]="readonlyForm"
+            [class.is-invalid]="taskForm.get('taskTitle')?.invalid && (taskForm.get('taskTitle')?.dirty || taskForm.get('taskTitle')?.touched)"
+            [class.is-valid]="!taskForm.get('taskTitle')?.invalid && (taskForm.get('taskTitle')?.dirty || taskForm.get('taskTitle')?.touched)">
+            <div id="task-title-help" class="form-text"> It will be the summarized task text description. 10-150 characters. </div>
+            <div *ngIf="taskForm.get('taskTitle')?.errors?.['required']" class="invalid-feedback"> The task title is needed. </div>
+            <div *ngIf="taskForm.get('taskTitle')?.errors?.['minlength']" class="invalid-feedback"> The task title text must have at least 10 characters. </div>
+            <div *ngIf="taskForm.get('taskTitle')?.errors?.['maxlength']" class="invalid-feedback"> The task title text can have up to 150 characters. </div>
+        </div>
+
+        <div class="mb-4">
+            <label for="task-description" class="form-label fw-bold"> Task Description (*) </label>
+            <textarea class="form-control" id="task-description" aria-describedby="task-description-help" formControlName="taskDescription"
+            spellcheck="false" autocapitalize="sentences" spellcheck="false" placeholder="Task Description Template Text" [readonly]="readonlyForm"
+            [class.is-invalid]="taskForm.get('taskDescription')?.invalid && (taskForm.get('taskDescription')?.dirty || taskForm.get('taskDescription')?.touched)"
+            [class.is-valid]="!taskForm.get('taskDescription')?.invalid && (taskForm.get('taskDescription')?.dirty || taskForm.get('taskDescription')?.touched)"></textarea>
+            <div id="task-description-help" class="form-text"> It will be the complete task text description. 10-1000 characters. </div>
+            <div *ngIf="taskForm.get('taskDescription')?.errors?.['required']" class="invalid-feedback"> The task description is needed. </div>
+            <div *ngIf="taskForm.get('taskDescription')?.errors?.['minlength']" class="invalid-feedback"> The task description text must have at least 10 characters. </div>
+            <div *ngIf="taskForm.get('taskDescription')?.errors?.['maxlength']" class="invalid-feedback"> The task description text can have up to 1000 characters. </div>
+        </div>
+
+        <div class="mb-4 col-md-6">
+            <label for="task-date" class="form-label fw-bold"> Task Date (*) </label>
+            <input type="date" class="form-control" id="task-date" aria-describedby="task-date-help" formControlName="taskDate" [readonly]="readonlyForm"
+            [class.is-invalid]="taskForm.get('taskDate')?.invalid && (taskForm.get('taskDate')?.dirty || taskForm.get('taskDate')?.touched)"
+            [class.is-valid]="!taskForm.get('taskDate')?.invalid && (taskForm.get('taskDate')?.dirty || taskForm.get('taskDate')?.touched)">
+            <div id="task-date-help" class="form-text"> It will be the date when the user will be reminded about the task. </div>
+            <div *ngIf="taskForm.get('taskDate')?.errors?.['required']" class="invalid-feedback"> The task date is needed. </div>
+        </div>
+
+        <div class="mb-4 col-md-6">
+            <label for="task-time" class="form-label fw-bold"> Task Time (*) </label>
+            <input type="time" class="form-control" id="task-time" aria-describedby="task-time-help" formControlName="taskTime" [readonly]="readonlyForm"
+            [class.is-invalid]="taskForm.get('taskTime')?.invalid && (taskForm.get('taskTime')?.dirty || taskForm.get('taskTime')?.touched)"
+            [class.is-valid]="!taskForm.get('taskTime')?.invalid && (taskForm.get('taskTime')?.dirty || taskForm.get('taskTime')?.touched)">
+            <div id="task-time-help" class="form-text"> It will be the time when the user will be reminded about the task. </div>
+            <div *ngIf="taskForm.get('taskTime')?.errors?.['required']" class="invalid-feedback"> The task time is needed. </div>
+        </div>
+
+        <div class="mb-4 col-md-6">
+            <label for="task-priority" class="form-label fw-bold"> Task Priority (*) </label>
+            <select class="form-select" aria-describedby="task-priority-help" formControlName="taskPriority"
+            [class.is-invalid]="taskForm.get('taskPriority')?.invalid && (taskForm.get('taskPriority')?.dirty || taskForm.get('taskPriority')?.touched)"
+            [class.is-valid]="!taskForm.get('taskPriority')?.invalid && (taskForm.get('taskPriority')?.dirty || taskForm.get('taskPriority')?.touched)">
+                <option value="1" selected> None </option>
+                <option value="2"> Low </option>
+                <option value="3"> Medium </option>
+                <option value="4"> High </option>
+            </select>
+            <div id="task-priority-help" class="form-text"> It will be the priority for task completion. </div>
+            <div *ngIf="taskForm.get('taskPriority')?.errors?.['required']" class="invalid-feedback"> The task priority is needed. </div>
+        </div>
+    </div>
+    
+    <input type="hidden" [value]="taskID">
+    <button type="submit" class="btn btn-primary" [disabled]="taskForm.invalid"> {{submitButtonText}} </button>
+</form>

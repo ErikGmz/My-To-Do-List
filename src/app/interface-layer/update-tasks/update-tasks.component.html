@@ -1,1 +1,7 @@
-<p>update-tasks works!</p>
+<h3> <i class="bi bi-arrow-clockwise"> </i> Update Task Data </h3>
+<hr class="border border-dark mb-4"> 
+
+<app-search-task [tasksListNotFoundMessage]="tasksListNotFoundMessage" #searchTask> 
+    <app-form-structure [confirmFormSubmitAlert]="confirmFormSubmitAlert" [formSubmitAlertMessage]="formSubmitAlertMessage"
+    [submitButtonText]="submitButtonText" [crudOperation]="crudOperation"> </app-form-structure>
+</app-search-task>

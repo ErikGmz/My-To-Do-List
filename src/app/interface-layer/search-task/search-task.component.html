@@ -1,0 +1,26 @@
+<ng-container *ngIf="tasksList.length > 0; else tasksNotFound">
+    <form (ngSubmit)="onSubmit()" class="container">
+        <div class="mb-4">
+            <label for="tasks-list" class="form-label fw-bold"> Current Tasks List (*) </label>
+            <select class="form-select" aria-label="Default select example">
+                <ng-template *ngFor="let task of tasksList; index as i">
+                    <ng-template *ngIf="i == 0; else notSelectedOption">
+                        <option selected value={{task.taskID}}> {{task.taskTitle}}</option>
+                    </ng-template>
+
+                    <ng-template #notSelectedOption>
+                        <option value={{task.taskID}}> {{task.taskTitle}}</option>
+                    </ng-template>
+                </ng-template>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary"> Load Task Data </button>
+    </form>
+</ng-container>
+
+<ng-template #tasksNotFound>
+    <div class="alert alert-warning" role="alert">
+        {{tasksListNotFoundMessage}}
+    </div>
+</ng-template>

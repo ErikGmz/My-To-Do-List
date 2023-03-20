@@ -6,10 +6,11 @@ import { DataLayerModule } from './data-layer/data-layer.module';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { TasksService } from './logic-layer/services/tasks.service';
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -18,7 +19,7 @@ import { AppRoutingModule } from './app-routing.module';
     DataLayerModule,
     AppRoutingModule,
   ],
-  providers: [],
+  providers: [TasksService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

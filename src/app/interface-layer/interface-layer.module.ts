@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { LogicLayerModule } from '../logic-layer/logic-layer.module';
 import { InterfaceLayerRoutingModule } from './interface-layer-routing.module';
 
 import { InterfaceLayerComponent } from './interface-layer.component';
@@ -10,6 +12,10 @@ import { TasksListComponent } from './tasks-list/tasks-list.component';
 import { AddTasksComponent } from './add-tasks/add-tasks.component';
 import { UpdateTasksComponent } from './update-tasks/update-tasks.component';
 import { RemoveTasksComponent } from './remove-tasks/remove-tasks.component';
+import { FormStructureComponent } from './form-structure/form-structure.component';
+
+import { PriorityFormatPipe } from './pipes/priority-format.pipe';
+import { SearchTaskComponent } from './search-task/search-task.component';
 
 @NgModule({
   declarations: [
@@ -20,12 +26,17 @@ import { RemoveTasksComponent } from './remove-tasks/remove-tasks.component';
     AddTasksComponent,
     UpdateTasksComponent,
     RemoveTasksComponent,
-    InterfaceLayerComponent
+    InterfaceLayerComponent,
+    FormStructureComponent,
+    PriorityFormatPipe,
+    SearchTaskComponent
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     RouterModule,
     InterfaceLayerRoutingModule,
+    LogicLayerModule
   ],
   exports: [
     InterfaceLayerComponent,
