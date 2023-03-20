@@ -4,10 +4,10 @@ export class Task {
     taskDescription: string;
     taskDate: string;
     taskTime: string;
-    taskPriority: string;
+    taskPriority: number;
 
     constructor(taskID: number, taskTitle: string, taskDescription: string,
-    taskDate: string, taskTime: string, taskPriority: string) { 
+    taskDate: string, taskTime: string, taskPriority: number) { 
         this.taskID = taskID;
         this.taskTitle = taskTitle;
         this.taskDescription = taskDescription;

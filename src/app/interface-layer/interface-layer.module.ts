@@ -14,7 +14,8 @@ import { UpdateTasksComponent } from './update-tasks/update-tasks.component';
 import { RemoveTasksComponent } from './remove-tasks/remove-tasks.component';
 import { FormStructureComponent } from './form-structure/form-structure.component';
 
-import { PriorityFormatPipe } from './pipes/priority-format.pipe';
+import { PriorityFormatPipe } from './pipes/priority-format/priority-format.pipe';
+import { TwelveHoursFormatPipe } from './pipes/twelve-hours-format/twelve-hours-format.pipe';
 import { SearchTaskComponent } from './search-task/search-task.component';
 
 @NgModule({
@@ -29,6 +30,7 @@ import { SearchTaskComponent } from './search-task/search-task.component';
     InterfaceLayerComponent,
     FormStructureComponent,
     PriorityFormatPipe,
+    TwelveHoursFormatPipe,
     SearchTaskComponent
   ],
   imports: [
@@ -45,7 +47,12 @@ import { SearchTaskComponent } from './search-task/search-task.component';
     TasksListComponent,
     AddTasksComponent,
     UpdateTasksComponent,
-    RemoveTasksComponent
+    RemoveTasksComponent,
+    InterfaceLayerComponent,
+    FormStructureComponent,
+    PriorityFormatPipe,
+    TwelveHoursFormatPipe,
+    SearchTaskComponent
   ]
 })
 export class InterfaceLayerModule { }

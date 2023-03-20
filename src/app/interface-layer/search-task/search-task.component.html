@@ -1,22 +1,29 @@
 <ng-container *ngIf="tasksList.length > 0; else tasksNotFound">
-    <form (ngSubmit)="onSubmit()" class="container">
+    <form [formGroup]="searchForm" class="container">
         <div class="mb-4">
             <label for="tasks-list" class="form-label fw-bold"> Current Tasks List (*) </label>
-            <select class="form-select" aria-label="Default select example">
-                <ng-template *ngFor="let task of tasksList; index as i">
-                    <ng-template *ngIf="i == 0; else notSelectedOption">
-                        <option selected value={{task.taskID}}> {{task.taskTitle}}</option>
-                    </ng-template>
+            <select class="form-select" aria-label="Default select example" formControlName="selectedTaskID">
+                <ng-container *ngFor="let task of tasksList; index as i">
+                    <ng-container *ngIf="i == 0; else notSelectedOption">
+                        <option selected value={{task.taskID}}> Task no. {{task.taskID}} - {{task.taskTitle}}</option>
+                    </ng-container>
 
                     <ng-template #notSelectedOption>
-                        <option value={{task.taskID}}> {{task.taskTitle}}</option>
+                        <option value={{task.taskID}}> Task no. {{task.taskID}} - {{task.taskTitle}}</option>
                     </ng-template>
-                </ng-template>
+                </ng-container>
             </select>
         </div>
 
-        <button type="submit" class="btn btn-primary"> Load Task Data </button>
+        <button type="button" (click)="onSubmit()" class="btn btn-primary"> Load Task Data </button>
     </form>
+
+    <ng-container *ngIf="taskIsSelected">
+        <div class="mt-4">
+            <app-form-structure [confirmFormSubmitAlert]="confirmFormSubmitAlert" [formSubmitAlertMessage]="formSubmitAlertMessage"
+            [submitButtonText]="submitButtonText" [crudOperation]="crudOperation" [readonlyForm]="readonlyForm" [taskData]="taskData"> </app-form-structure>
+        </div>
+    </ng-container>
 </ng-container>
 
 <ng-template #tasksNotFound>

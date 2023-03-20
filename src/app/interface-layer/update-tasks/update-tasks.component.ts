@@ -18,6 +18,7 @@ export class UpdateTasksComponent implements OnInit {
   };
   submitButtonText: string = "Update Task Data";
   crudOperation = CrudOperations.UPDATE;
+  readonlyForm = false;
 
   constructor() { }
 

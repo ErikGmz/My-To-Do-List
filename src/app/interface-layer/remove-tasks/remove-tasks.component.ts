@@ -16,8 +16,9 @@ export class RemoveTasksComponent implements OnInit {
     title: "Successfully removed new task!",
     text: "You can check the changes now in your My-To-Do List.",
   };
-  submitButtonText: string = "Update Task Data";
+  submitButtonText: string = "Remove Task";
   crudOperation = CrudOperations.DELETE;
+  readonlyForm = true;
 
   constructor() { }
 

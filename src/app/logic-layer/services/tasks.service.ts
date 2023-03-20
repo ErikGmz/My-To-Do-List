@@ -32,12 +32,17 @@ export class TasksService {
     return this.localStorage.get(this.localStorageKey);
   }
 
-  getTasksList(): Task[] {
-    return this.tasksList;
-  }
+  getTaskByID(taskID: number): Task {
+    let foundTask: Task = new Task(-1, "", "", "", "", -1);
 
-  getTaskByID(taskID: number) {
-    return this.tasksList[taskID];
+    this.tasksList.forEach((task) => {
+      if(task.taskID == taskID) {
+        foundTask = task;
+        return;
+      }
+    });
+
+    return foundTask;
   }
 
   addNewTask(newTask: Task) {
@@ -46,20 +51,34 @@ export class TasksService {
   }
 
   updateTask(newTaskData: Task) {
-    let updatedTaskIndex: number = this.tasksList.findIndex((task) => {
-      task.taskID === newTaskData.taskID;
+    let taskIndex = -1;
+
+    this.tasksList.forEach((task, index) => {
+      if(task.taskID == newTaskData.taskID) {
+        taskIndex = index;
+        return;
+      }
     });
 
-    this.tasksList[updatedTaskIndex] = newTaskData;
-    this.setLocalStorageValue();
+    if(taskIndex != -1) {
+      this.tasksList[taskIndex] = newTaskData;
+      this.setLocalStorageValue();
+    }
   }
 
   removeTask(taskID: number) {
-    let deletedTaskIndex: number = this.tasksList.findIndex((task) => {
-      task.taskID === taskID;
+    let taskIndex = -1;
+
+    this.tasksList.forEach((task, index) => {
+      if(task.taskID == taskID) {
+        taskIndex = index;
+        return;
+      }
     });
 
-    this.tasksList.splice(deletedTaskIndex, 1);
-    this.setLocalStorageValue();
+    if(taskIndex != -1) {
+      this.tasksList.splice(taskIndex, 1);
+      this.setLocalStorageValue();
+    }
   }
 }

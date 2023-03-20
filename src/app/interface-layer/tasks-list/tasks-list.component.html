@@ -1,2 +1,43 @@
-<h3> <i class="bi bi-list-task"> </i> My-To-Do List </h3>
+<h3> <i class="bi bi-clipboard2-data-fill"> </i> My-To-Do Tasks List </h3>
 <hr class="border border-dark mb-4">
+
+<ng-container *ngIf="tasksList.length > 0; else tasksNotFound">
+    <div class="container table-responsive">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th scope="col"> Task ID </th>
+                    <th scope="col"> Title </th>
+                    <th scope="col"> Description </th>
+                    <th scope="col"> Date </th>
+                    <th scope="col"> Time </th>
+                    <th scope="col"> Priority </th>
+                </tr>
+            </thead>
+        
+            <tbody>
+                <ng-container *ngFor="let task of tasksList">
+                    <tr>
+                        <th scope="row"> {{task.taskID}} </th>
+                        <td> {{task.taskTitle}} </td>
+                        <td> {{task.taskDescription}} </td>
+                        <td> {{task.taskDate | date: "dd-LL-yyyy"}} </td>
+                        <td> {{task.taskTime | twelveHoursFormat}} </td>
+                        <ng-container [ngSwitch]="task.taskPriority">
+                            <td *ngSwitchCase="1"> <span class="badge bg-secondary"> {{task.taskPriority | priorityFormat}} </span> </td>
+                            <td *ngSwitchCase="2"> <span class="badge bg-success"> {{task.taskPriority | priorityFormat}} </span> </td>
+                            <td *ngSwitchCase="3"> <span class="badge bg-warning"> {{task.taskPriority | priorityFormat}} </span> </td>
+                            <td *ngSwitchCase="4"> <span class="badge bg-danger"> {{task.taskPriority | priorityFormat}} </span> </td>
+                        </ng-container>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </div>
+</ng-container>
+
+<ng-template #tasksNotFound>
+    <div class="alert alert-warning" role="alert">
+        {{tasksListNotFoundMessage}}
+    </div>
+</ng-template>

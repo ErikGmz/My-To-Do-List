@@ -1,5 +1,5 @@
 import { formatDate } from '@angular/common';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CrudOperations } from '../CrudOperations.model';
 import Swal from 'sweetalert2';
@@ -13,7 +13,7 @@ import { Task } from 'src/app/data-layer/task.model';
 })
 export class FormStructureComponent implements OnInit {
   taskForm = new FormGroup({
-    taskTitle: new FormControl("", [Validators.required, Validators.minLength(10), Validators.maxLength(150)]),
+    taskTitle: new FormControl("", [Validators.required, Validators.minLength(5), Validators.maxLength(150)]),
     taskDescription: new FormControl("", [Validators.required, Validators.minLength(10), Validators.maxLength(1000)]),
     taskDate: new FormControl(formatDate(new Date(Date.now()), "yyyy-MM-dd", "en"), Validators.required),
     taskTime: new FormControl(formatDate(new Date(Date.now()), "HH:mm", "en"), Validators.required),
@@ -25,18 +25,24 @@ export class FormStructureComponent implements OnInit {
 
   @Input() crudOperation = CrudOperations.ADD;
   @Input() readonlyForm = false;
-  @Input() taskID = 0;
+  @Input() taskData = new Task(-1, "", "", "", "", -1);
 
   constructor(public tasksService: TasksService) {
   }
 
   ngOnInit(): void {
     if(this.readonlyForm) {
-      this.taskForm.get('taskTitle')?.disable();
-      this.taskForm.get('taskDescription')?.disable();
-      this.taskForm.get('taskDate')?.disable();
-      this.taskForm.get('taskTime')?.disable();
-      this.taskForm.get('taskPriority')?.disable();
+      this.disableFormControls();
+    }
+
+    if(this.taskData.taskID != -1) {
+      this.loadFormData();
+    }
+  }
+
+  ngOnChanges(formChanges: SimpleChanges) {
+    if(formChanges['taskData']) {
+      this.loadFormData();
     }
   }
 
@@ -59,21 +65,22 @@ export class FormStructureComponent implements OnInit {
         if(response.isConfirmed) {
           switch(this.crudOperation) {
             case CrudOperations.ADD: {
-              let newTask = new Task(this.tasksService.getTasksList().length + 1, this.taskForm.controls.taskTitle.value || "", this.taskForm.controls.taskDescription.value || "",
-              this.taskForm.controls.taskDate.value || "", this.taskForm.controls.taskTime.value || "", this.taskForm.controls.taskPriority.value || "");
+              let newTask = new Task(this.tasksService.tasksList.length + 1, this.taskForm.controls.taskTitle.value || "", this.taskForm.controls.taskDescription.value || "",
+              this.taskForm.controls.taskDate.value || "", this.taskForm.controls.taskTime.value || "", Number(this.taskForm.controls.taskPriority.value));
               this.tasksService.addNewTask(newTask);
               break;
             }
 
             case CrudOperations.UPDATE: {
-              let newTaskData = new Task(this.tasksService.getTasksList().length + 1, this.taskForm.controls.taskTitle.value || "", this.taskForm.controls.taskDescription.value || "",
-              this.taskForm.controls.taskDate.value || "", this.taskForm.controls.taskTime.value || "", this.taskForm.controls.taskPriority.value || "");
+              let newTaskData = new Task(this.taskData.taskID, this.taskForm.controls.taskTitle.value || "", this.taskForm.controls.taskDescription.value || "",
+              this.taskForm.controls.taskDate.value || "", this.taskForm.controls.taskTime.value || "", Number(this.taskForm.controls.taskPriority.value));
+              this.taskData = newTaskData;
               this.tasksService.updateTask(newTaskData);
               break;
             }
 
             case CrudOperations.DELETE: {
-              this.tasksService.removeTask(this.taskID);
+              this.tasksService.removeTask(this.taskData.taskID);
               break;
             }
           }
@@ -84,13 +91,45 @@ export class FormStructureComponent implements OnInit {
             icon: "success"
           })
           .then(() => {
-            this.taskForm.reset();
-            this.taskForm.get('taskDate')?.setValue(formatDate(new Date(Date.now()), "yyyy-MM-dd", "en"));
-            this.taskForm.get('taskTime')?.setValue(formatDate(new Date(Date.now()), "HH:mm", "en"));
-            this.taskForm.get('taskPriority')?.setValue("1");
+            switch(this.crudOperation) {
+              case CrudOperations.ADD: {
+                this.taskForm.reset();
+                this.taskForm.get('taskDate')?.setValue(formatDate(new Date(Date.now()), "yyyy-MM-dd", "en"));
+                this.taskForm.get('taskTime')?.setValue(formatDate(new Date(Date.now()), "HH:mm", "en"));
+                this.taskForm.get('taskPriority')?.setValue("1");
+                break;
+              }
+
+              case CrudOperations.UPDATE: {
+                this.taskForm.reset();
+                this.loadFormData();
+                break;
+              }
+  
+              case CrudOperations.DELETE: {
+                window.location.reload();
+                break;
+              }
+            }
           });
         }
       })
     }
+  }
+
+  disableFormControls() {
+    this.taskForm.get('taskTitle')?.disable();
+    this.taskForm.get('taskDescription')?.disable();
+    this.taskForm.get('taskDate')?.disable();
+    this.taskForm.get('taskTime')?.disable();
+    this.taskForm.get('taskPriority')?.disable();
+  }
+
+  loadFormData() {
+    this.taskForm.get('taskTitle')?.setValue(this.taskData.taskTitle);
+    this.taskForm.get('taskDescription')?.setValue(this.taskData.taskDescription);
+    this.taskForm.get('taskDate')?.setValue(this.taskData.taskDate);
+    this.taskForm.get('taskTime')?.setValue(this.taskData.taskTime);
+    this.taskForm.get('taskPriority')?.setValue(String(this.taskData.taskPriority));
   }
 }

@@ -8,11 +8,11 @@ export class PriorityFormatPipe implements PipeTransform {
   transform(value: number): String {
     let priorityText: String;
 
-    switch(value) {
-      case 1: {priorityText = "none"; break;}
-      case 2: {priorityText = "low"; break;}
-      case 3: {priorityText = "medium"; break;}
-      case 4: {priorityText = "high"; break;}
+    switch(Number(value)) {
+      case 1: {priorityText = "None"; break;}
+      case 2: {priorityText = "Low"; break;}
+      case 3: {priorityText = "Medium"; break;}
+      case 4: {priorityText = "High"; break;}
       default: {priorityText = "N/A"; break;}
     }
 

@@ -6,9 +6,9 @@
             autocomplete="OFF" autocapitalize="sentences" spellcheck="false" placeholder="Task Title Template Text" [readonly]="readonlyForm"
             [class.is-invalid]="taskForm.get('taskTitle')?.invalid && (taskForm.get('taskTitle')?.dirty || taskForm.get('taskTitle')?.touched)"
             [class.is-valid]="!taskForm.get('taskTitle')?.invalid && (taskForm.get('taskTitle')?.dirty || taskForm.get('taskTitle')?.touched)">
-            <div id="task-title-help" class="form-text"> It will be the summarized task text description. 10-150 characters. </div>
+            <div id="task-title-help" class="form-text"> It will be the summarized task text description. 5-150 characters. </div>
             <div *ngIf="taskForm.get('taskTitle')?.errors?.['required']" class="invalid-feedback"> The task title is needed. </div>
-            <div *ngIf="taskForm.get('taskTitle')?.errors?.['minlength']" class="invalid-feedback"> The task title text must have at least 10 characters. </div>
+            <div *ngIf="taskForm.get('taskTitle')?.errors?.['minlength']" class="invalid-feedback"> The task title text must have at least 5 characters. </div>
             <div *ngIf="taskForm.get('taskTitle')?.errors?.['maxlength']" class="invalid-feedback"> The task title text can have up to 150 characters. </div>
         </div>
 
@@ -57,6 +57,5 @@
         </div>
     </div>
     
-    <input type="hidden" [value]="taskID">
     <button type="submit" class="btn btn-primary" [disabled]="taskForm.invalid"> {{submitButtonText}} </button>
 </form>
