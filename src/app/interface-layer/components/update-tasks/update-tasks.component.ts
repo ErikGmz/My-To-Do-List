@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CrudOperations } from '../CrudOperations.model';
+import { CrudOperations } from '../../models/CrudOperations.model';
 
 @Component({
   selector: 'app-update-tasks',

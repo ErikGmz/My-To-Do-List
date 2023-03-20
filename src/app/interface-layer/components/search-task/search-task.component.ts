@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { TasksService } from 'src/app/logic-layer/services/tasks.service';
 import { FormGroup, FormControl } from '@angular/forms';
-import { CrudOperations } from '../CrudOperations.model';
+import { CrudOperations } from '../../models/CrudOperations.model';
 import { Task } from 'src/app/data-layer/task.model';
 
 @Component({

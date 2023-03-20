@@ -1,7 +1,7 @@
 import { formatDate } from '@angular/common';
 import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { CrudOperations } from '../CrudOperations.model';
+import { CrudOperations } from '../../models/CrudOperations.model';
 import Swal from 'sweetalert2';
 import { TasksService } from 'src/app/logic-layer/services/tasks.service';
 import { Task } from 'src/app/data-layer/task.model';
